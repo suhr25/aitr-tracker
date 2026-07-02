@@ -2,9 +2,8 @@
 
 import { useApp } from "@/contexts/AuthContext";
 import { DEPARTMENTS } from "@/lib/data";
-import { Role, Criterion, Status } from "@/lib/types";
+import { Role, Criterion, Status, HistoryEntry } from "@/lib/types";
 import Link from "next/link";
-import { useState } from "react";
 import {
   BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip, Cell,
   PieChart, Pie, CartesianGrid, Legend
@@ -69,7 +68,7 @@ function StatCard({ icon, label, value, color }: {
 // ══════════════════════════════════════════════════════
 // CHAIRMAN DASHBOARD
 // ══════════════════════════════════════════════════════
-function ChairmanDashboard({ criteria, activityLog }: { criteria: Criterion[]; activityLog: any[] }) {
+function ChairmanDashboard({ criteria, activityLog }: { criteria: Criterion[]; activityLog: HistoryEntry[] }) {
   const overall = getStats(criteria);
 
   const barData = DEPARTMENTS.map((d) => {

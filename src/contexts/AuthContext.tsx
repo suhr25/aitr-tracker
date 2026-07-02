@@ -52,6 +52,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [criteria, setCriteria] = useState<Criterion[]>([]);
   const [activityLog, setActivityLog] = useState<HistoryEntry[]>([]);
   const [hydrated, setHydrated] = useState(false);
+  const [firebaseError, setFirebaseError] = useState<string | null>(null);
 
   // Hydrate Auth from localStorage on mount
   useEffect(() => {
@@ -79,8 +80,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
           await batch.commit();
           console.log("Seeding complete!");
         }
-      } catch (err) {
+      } catch (err: any) {
         console.error("Error seeding database:", err);
+        setFirebaseError("Failed to seed database: " + err.message);
       }
     };
 
@@ -94,8 +96,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       });
       setCriteria(liveCriteria);
       setHydrated(true);
+      setFirebaseError(null);
     }, (error) => {
       console.error("Error fetching criteria:", error);
+      setFirebaseError("Firebase sync error: " + error.message);
       setHydrated(true); // Don't block UI on error
     });
 
@@ -299,6 +303,11 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     <AppContext.Provider
       value={{ user, login, logout, criteria, updateCriterionStatus, addCriterion, deleteCriterion, updateCriterionDueDate, updateChairmanFeedback, activityLog }}
     >
+      {firebaseError && (
+        <div className="fixed top-0 left-0 right-0 z-50 bg-red-600 text-white px-4 py-2 text-center text-sm font-medium shadow-lg">
+          {firebaseError}
+        </div>
+      )}
       {children}
     </AppContext.Provider>
   );
