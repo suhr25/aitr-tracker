@@ -159,7 +159,7 @@ function ChairmanDashboard({ criteria, activityLog }: { criteria: Criterion[]; a
                   cursor={{fill: 'hsl(var(--muted))', opacity: 0.2}}
                   contentStyle={{ backgroundColor: 'hsl(var(--card))', borderRadius: '8px', border: '1px solid hsl(var(--border))', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)' }}
                   itemStyle={{ color: 'hsl(var(--foreground))', fontWeight: 600 }}
-                  formatter={(value: any) => [`${value}%`, "Progress"]} 
+                  formatter={(value) => [`${value}%`, "Progress"]}
                 />
                 <Bar dataKey="progress" radius={[6, 6, 0, 0]}>
                   {barData.map((entry, i) => (

@@ -80,9 +80,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
           await batch.commit();
           console.log("Seeding complete!");
         }
-      } catch (err: any) {
+      } catch (err) {
         console.error("Error seeding database:", err);
-        setFirebaseError("Failed to seed database: " + err.message);
+        const message = err instanceof Error ? err.message : String(err);
+        setFirebaseError("Failed to seed database: " + message);
       }
     };
 
