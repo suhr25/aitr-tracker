@@ -45,7 +45,7 @@ const AppContext = createContext<AppContextType>({
 
 export const useApp = () => useContext(AppContext);
 
-const STORAGE_KEY_USER = "cptms_user";
+const STORAGE_KEY_USER = "aitr_user";
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
